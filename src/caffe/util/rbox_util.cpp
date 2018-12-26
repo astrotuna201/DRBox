@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 #include <math.h>
-#include <omp.h>
+//#include <omp.h>
 
 #include "boost/iterator/counting_iterator.hpp"
 
@@ -177,7 +177,7 @@ void GetLocPredictionsR(const Dtype* loc_data, const int num,
 	if (regress_angle) num_param ++;
 	if (regress_size) num_param += 2;
 	//const Dtype* loc_data1 = loc_data;
-	#pragma omp parallel for
+	//#pragma omp parallel for
 	for (int i = 0; i < num; ++i) {
 		LabelRBox& label_rbox = (*loc_preds)[i];
 		const Dtype* loc_data1 = loc_data + num_preds_per_class * num_loc_classes * num_param * i;
@@ -2016,8 +2016,8 @@ void DecodeRBoxesAll(const vector<LabelRBox>& all_loc_preds,
 	CHECK_EQ(all_loc_preds.size(), num);
 	all_decode_rboxes->clear();
 	all_decode_rboxes->resize(num);
-	omp_set_num_threads(16);
-	#pragma omp parallel for
+	//omp_set_num_threads(16);
+	//#pragma omp parallel for
 	for (int i = 0; i < num; ++i) {
 		// Decode predictions into rboxes.
 		LabelRBox& decode_rboxes = (*all_decode_rboxes)[i];
